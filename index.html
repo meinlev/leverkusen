@@ -161,9 +161,7 @@ const AKTUELL = [
     title: "Reparaturwerkstatt im Kirchfeld",
     when: "Samstag, 31.10.2026, 11–15 Uhr",
     where: "OGS Räuberhöhle, Im Kirchfeld 15, Lützenkirchen",
-    url: "https://www.imkirchfeld.de",
-    source: "imkirchfeld.de",
-    sourceUrl: "https://www.imkirchfeld.de"
+    url: "https://www.imkirchfeld.de"
   }
 ];
 
@@ -194,8 +192,8 @@ AKTUELL.forEach((n, i) => {
   if (n.where) { const o = document.createElement("p"); o.className = "where"; o.textContent = n.where; li.appendChild(o); }
   const row = document.createElement("div"); row.className = "row";
   const a = document.createElement("a"); a.className = "go"; a.href = n.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Mehr erfahren →";
-  const src = document.createElement("span"); src.className = "src"; src.append("Quelle: ");
-  const sa = document.createElement("a"); sa.href = n.sourceUrl; sa.target = "_blank"; sa.rel = "noopener"; sa.textContent = n.source;
+  const src = document.createElement("span"); src.className = "src"; src.append("Link führt zu: ");
+  const sa = document.createElement("a"); sa.href = n.url; sa.target = "_blank"; sa.rel = "noopener"; sa.textContent = new URL(n.url).hostname.replace(/^www\./, "");
   src.appendChild(sa); row.append(a, src); li.appendChild(row); news.appendChild(li);
 });
 
