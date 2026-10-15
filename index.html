@@ -66,12 +66,12 @@ h1 .lev { font-weight: 800; }
 .links a {
   display: flex; align-items: center; justify-content: space-between; gap: 14px;
   padding: 14px 20px 14px 16px; background: var(--white); border-radius: 22px;
-  color: var(--ink); text-decoration: none; font-weight: 600;
-  transition: transform .15s, box-shadow .15s;
+  color: var(--pc, var(--ink)); text-decoration: none; font-weight: 600;
+  transition: transform .15s;
 }
-.links a:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ink-dark); }
+.links a:hover { transform: translateY(-2px); }
 .links a:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
-.links small { display: block; font-weight: 400; color: var(--ink-dark); opacity: .75; font-size: 14px; }
+.links small { display: block; font-weight: 400; color: var(--pc, var(--ink-dark)); opacity: .8; font-size: 14px; }
 .links .arrow { font-size: 20px; flex: none; }
 .links div { min-width: 0; flex: 1; }
 .links .ico { width: 34px; height: 34px; flex: none; color: var(--ink); display: grid; place-items: center; }
@@ -206,6 +206,7 @@ const LINKS = [
 ];
 
 const ICONS = { instagram: "icons/instagram.png", whatsapp: "icons/whatsapp.png" };
+const PLATTFORM_FARBE = { instagram: "#de2065", whatsapp: "#16844f" };
 
 const list = document.getElementById("links");
 list.hidden = LINKS.length === 0;
@@ -213,6 +214,7 @@ for (const l of LINKS) {
   const li = document.createElement("li");
   const a = document.createElement("a");
   a.href = l.url; a.target = "_blank"; a.rel = "noopener";
+  if (PLATTFORM_FARBE[l.icon]) a.style.setProperty("--pc", PLATTFORM_FARBE[l.icon]);
   const d = document.createElement("div");
   d.textContent = l.title;
   if (l.note) { const s = document.createElement("small"); s.textContent = l.note; d.appendChild(s); }
