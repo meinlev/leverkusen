@@ -34,11 +34,12 @@ body {
 header { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
 .mono {
   width: 96px; height: 96px; border-radius: 50%; background: var(--white); color: var(--ink);
-  display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 36px; letter-spacing: -0.02em;
+  display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 30px; letter-spacing: 0.02em;
   box-shadow: 0 0 0 6px var(--bg), 0 0 0 8px var(--line);
 }
 h1 { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 8vw, 40px); line-height: 1.05; margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
-h1 span { font-weight: 600; }
+h1 .lt { font-weight: 400; opacity: .85; }
+h1 .lev { font-weight: 800; }
 .tag { margin: 0; color: var(--soft); max-width: 34ch; }
 .plz { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); font-variant-numeric: tabular-nums; }
 .wave { display: block; width: 120px; height: 14px; margin: 0 auto; color: var(--white); opacity: .9; }
@@ -74,8 +75,8 @@ footer a:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
 <body>
 <div class="wrap">
   <header>
-    <div class="mono" aria-hidden="true">ML</div>
-    <h1>Mein<span>Leverkusen</span></h1>
+    <div class="mono" aria-hidden="true">LEV</div>
+    <h1 aria-label="MeinLeverkusen"><span class="lt">mein</span><span class="lev">LEV</span><span class="lt">erkusen</span></h1>
     <p class="tag">Was heute in Leverkusen los ist, jeden Tag kurz zusammengefasst.</p>
     <div class="plz">Leverkusen · 51371–51381</div>
   </header>
