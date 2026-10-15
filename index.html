@@ -16,6 +16,7 @@
   --line: rgba(255, 255, 255, 0.35);
   --ink: #0f47af;
   --ink-dark: #0a3484;
+  --hl: #ffd84d;
   --display: "Avenir Next", "Segoe UI Black", "Helvetica Neue", Arial, system-ui, sans-serif;
   --body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color-scheme: dark;
@@ -31,6 +32,7 @@ body {
   min-height: 100%;
 }
 .wrap { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+.section-label[hidden] + * { display: none; }
 header { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
 .mono {
   width: 96px; height: 96px; border-radius: 50%; background: var(--white); color: var(--ink);
@@ -43,6 +45,17 @@ h1 .lev { font-weight: 800; }
 .tag { margin: 0; color: var(--soft); max-width: 34ch; }
 .plz { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); font-variant-numeric: tabular-nums; }
 .wave { display: block; width: 120px; height: 14px; margin: 0 auto; color: var(--white); opacity: .9; }
+.section-label { margin: 0 0 -16px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); font-weight: 600; }
+.news { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.news li { background: var(--hl); color: var(--ink-dark); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
+.news .t { font-family: var(--display); font-weight: 800; font-size: 20px; line-height: 1.15; margin: 0; }
+.news .when { font-weight: 600; font-variant-numeric: tabular-nums; margin: 0; }
+.news .where { margin: 0; }
+.news .row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-top: 4px; }
+.news .go { display: inline-flex; align-items: center; gap: 8px; background: var(--ink-dark); color: var(--hl); text-decoration: none; font-weight: 600; padding: 10px 16px; border-radius: 10px; }
+.news .go:focus-visible { outline: 3px solid var(--ink-dark); outline-offset: 3px; }
+.news .src { font-size: 13px; color: var(--ink-dark); }
+.news .src a { color: var(--ink-dark); }
 .links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
 .links a {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -85,6 +98,10 @@ footer a:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
     <path d="M2 7 C 12 1, 22 1, 32 7 S 52 13, 62 7 S 82 1, 92 7 S 112 13, 118 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
   </svg>
 
+  <p class="section-label" id="news-label">Aktuell</p>
+  <ul class="news" id="news"></ul>
+
+  <p class="section-label">Unsere Kanäle</p>
   <ul class="links" id="links"></ul>
 
   <footer>
@@ -127,6 +144,34 @@ footer a:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
 </div>
 
 <script>
+// Aktuelle Hinweise: erscheinen oben, gelb hervorgehoben.
+const AKTUELL = [
+  {
+    title: "Reparaturwerkstatt im Kirchfeld",
+    when: "Samstag, 31.10.2026, 11–15 Uhr",
+    where: "OGS Räuberhöhle, Im Kirchfeld 15, Lützenkirchen",
+    url: "https://www.imkirchfeld.de",
+    source: "imkirchfeld.de",
+    sourceUrl: "https://www.imkirchfeld.de"
+  }
+];
+
+const news = document.getElementById("news");
+news.hidden = AKTUELL.length === 0;
+document.getElementById("news-label").hidden = AKTUELL.length === 0;
+for (const n of AKTUELL) {
+  const li = document.createElement("li");
+  const h = document.createElement("p"); h.className = "t"; h.textContent = n.title;
+  const w = document.createElement("p"); w.className = "when"; w.textContent = n.when;
+  li.append(h, w);
+  if (n.where) { const o = document.createElement("p"); o.className = "where"; o.textContent = n.where; li.appendChild(o); }
+  const row = document.createElement("div"); row.className = "row";
+  const a = document.createElement("a"); a.className = "go"; a.href = n.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Mehr erfahren →";
+  const src = document.createElement("span"); src.className = "src"; src.append("Quelle: ");
+  const sa = document.createElement("a"); sa.href = n.sourceUrl; sa.target = "_blank"; sa.rel = "noopener"; sa.textContent = n.source;
+  src.appendChild(sa); row.append(a, src); li.appendChild(row); news.appendChild(li);
+}
+
 // Link-Liste: hier werden Links ergänzt, entfernt oder umsortiert.
 const LINKS = [
   { title: "MeinLeverkusen auf Instagram", note: "Instagram", url: "https://short.meinlev.de/leverkusen-instagram" },
