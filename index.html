@@ -53,15 +53,15 @@ h1 .lev { font-weight: 800; }
 .wave { display: block; width: 120px; height: 14px; margin: 0 auto; color: var(--white); opacity: .9; }
 .section-label { margin: 0 0 -14px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--white); font-weight: 800; }
 .news { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
-.news li { background: var(--red); color: var(--white); border-radius: 22px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
+.news li { background: var(--c); color: var(--t); border-radius: 22px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
 .news .t { font-family: var(--display); font-weight: 800; font-size: 20px; text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.15; margin: 0; }
 .news .when { font-weight: 600; font-variant-numeric: tabular-nums; margin: 0; }
 .news .where { margin: 0; }
 .news .row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-top: 4px; }
-.news .go { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--red-dark); text-decoration: none; font-weight: 600; padding: 10px 16px; border-radius: 10px; }
-.news .go:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
-.news .src { font-size: 13px; color: var(--white); opacity: .9; }
-.news .src a { color: var(--white); }
+.news .go { display: inline-flex; align-items: center; gap: 8px; background: var(--bt); color: var(--bc); text-decoration: none; font-weight: 600; padding: 10px 16px; border-radius: 10px; }
+.news .go:focus-visible { outline: 3px solid var(--t); outline-offset: 3px; }
+.news .src { font-size: 13px; color: var(--t); opacity: .9; }
+.news .src a { color: var(--t); }
 .links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
 .links a {
   display: flex; align-items: center; justify-content: space-between; gap: 14px;
@@ -155,7 +155,7 @@ footer a:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
 </div>
 
 <script>
-// Links aus unseren Beiträgen: erscheinen oben, rot hervorgehoben.
+// Links aus unseren Beiträgen: erscheinen oben, jeder in einer eigenen Farbe (siehe FARBEN).
 const AKTUELL = [
   {
     title: "Reparaturwerkstatt im Kirchfeld",
@@ -167,11 +167,27 @@ const AKTUELL = [
   }
 ];
 
+// Farben für die Kästen "Links aus unseren Beiträgen": werden der Reihe nach vergeben (1. Link Petrol, 2. Waldgrün, ...).
+const FARBEN = [
+  { c: "#007e8b", t: "#ffffff", bt: "#ffffff", bc: "#00606a" },
+  { c: "#176b45", t: "#ffffff", bt: "#ffffff", bc: "#125536" },
+  { c: "#527a62", t: "#ffffff", bt: "#ffffff", bc: "#3e5e4b" },
+  { c: "#8a9a3e", t: "#ffffff", bt: "#ffffff", bc: "#5f6b29" },
+  { c: "#c85a3f", t: "#ffffff", bt: "#ffffff", bc: "#9c4430" },
+  { c: "#7a1f3d", t: "#ffffff", bt: "#ffffff", bc: "#7a1f3d" },
+  { c: "#5b3a5e", t: "#ffffff", bt: "#ffffff", bc: "#5b3a5e" },
+  { c: "#2e2e2e", t: "#ffffff", bt: "#ffffff", bc: "#2e2e2e" },
+  { c: "#0b3a91", t: "#ffffff", bt: "#ffffff", bc: "#0b3a91" },
+  { c: "#ffd84d", t: "#0b3a91", bt: "#0b3a91", bc: "#ffd84d" }
+];
+
 const news = document.getElementById("news");
 news.hidden = AKTUELL.length === 0;
 document.getElementById("news-label").hidden = AKTUELL.length === 0;
-for (const n of AKTUELL) {
+AKTUELL.forEach((n, i) => {
   const li = document.createElement("li");
+  const f = FARBEN[i % FARBEN.length];
+  li.style.cssText = `--c:${f.c};--t:${f.t};--bt:${f.bt};--bc:${f.bc}`;
   const h = document.createElement("p"); h.className = "t"; h.textContent = n.title;
   const w = document.createElement("p"); w.className = "when"; w.textContent = n.when;
   li.append(h, w);
@@ -181,7 +197,7 @@ for (const n of AKTUELL) {
   const src = document.createElement("span"); src.className = "src"; src.append("Quelle: ");
   const sa = document.createElement("a"); sa.href = n.sourceUrl; sa.target = "_blank"; sa.rel = "noopener"; sa.textContent = n.source;
   src.appendChild(sa); row.append(a, src); li.appendChild(row); news.appendChild(li);
-}
+});
 
 // Link-Liste: hier werden Links ergänzt, entfernt oder umsortiert.
 const LINKS = [
