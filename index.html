@@ -75,7 +75,7 @@ h1 .lev { font-weight: 800; }
 .links .arrow { font-size: 20px; flex: none; }
 .links div { min-width: 0; flex: 1; }
 .links .ico { width: 34px; height: 34px; flex: none; color: var(--ink); display: grid; place-items: center; }
-.links .ico svg { width: 30px; height: 30px; }
+.links .ico img { width: 28px; height: 28px; display: block; }
 footer { text-align: center; font-size: 13px; line-height: 1.55; color: var(--soft); display: flex; flex-direction: column; gap: 6px; padding-top: 20px; border-top: 1px solid var(--line); }
 footer p { margin: 0; max-width: 42ch; margin-inline: auto; }
 footer strong { color: var(--white); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-size: 12px; }
@@ -185,16 +185,13 @@ for (const n of AKTUELL) {
 
 // Link-Liste: hier werden Links ergänzt, entfernt oder umsortiert.
 const LINKS = [
-  { title: "MeinLeverkusen auf Instagram", note: "Instagram", icon: "photo", url: "https://short.meinlev.de/leverkusen-instagram" },
-  { title: "MeinLeverkusen auf WhatsApp", note: "WhatsApp-Kanal", icon: "chat", url: "https://short.meinlev.de/leverkusen-whatsapp" },
-  { title: "MeinLützenkirchen auf Instagram", note: "Instagram", icon: "photo", url: "https://short.meinlev.de/luetzenkirchen-instagram" },
-  { title: "MeinLützenkirchen auf WhatsApp", note: "WhatsApp-Kanal", icon: "chat", url: "https://short.meinlev.de/luetzenkirchen-whatsapp" }
+  { title: "MeinLeverkusen auf Instagram", note: "Instagram", icon: "instagram", url: "https://short.meinlev.de/leverkusen-instagram" },
+  { title: "MeinLeverkusen auf WhatsApp", note: "WhatsApp-Kanal", icon: "whatsapp", url: "https://short.meinlev.de/leverkusen-whatsapp" },
+  { title: "MeinLützenkirchen auf Instagram", note: "Instagram", icon: "instagram", url: "https://short.meinlev.de/luetzenkirchen-instagram" },
+  { title: "MeinLützenkirchen auf WhatsApp", note: "WhatsApp-Kanal", icon: "whatsapp", url: "https://short.meinlev.de/luetzenkirchen-whatsapp" }
 ];
 
-const ICONS = {
-  photo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg>',
-  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01"/></svg>'
-};
+const ICONS = { instagram: "icons/instagram.png", whatsapp: "icons/whatsapp.png" };
 
 const list = document.getElementById("links");
 list.hidden = LINKS.length === 0;
@@ -206,7 +203,7 @@ for (const l of LINKS) {
   d.textContent = l.title;
   if (l.note) { const s = document.createElement("small"); s.textContent = l.note; d.appendChild(s); }
   const ar = document.createElement("span"); ar.className = "arrow"; ar.textContent = "→"; ar.setAttribute("aria-hidden", "true");
-  if (l.icon && ICONS[l.icon]) { const ic = document.createElement("span"); ic.className = "ico"; ic.innerHTML = ICONS[l.icon]; a.appendChild(ic); }
+  if (l.icon && ICONS[l.icon]) { const ic = document.createElement("span"); ic.className = "ico"; const im = document.createElement("img"); im.src = ICONS[l.icon]; im.alt = ""; im.width = 28; im.height = 28; ic.appendChild(im); a.appendChild(ic); }
   a.append(d, ar); li.appendChild(a); list.appendChild(li);
 }
 
